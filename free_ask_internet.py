@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import os 
+import os
 from pprint import pprint
 import requests
 import trafilatura
@@ -184,30 +184,44 @@ def chat(prompt, model:str,llm_auth_token:str,llm_base_url:str,using_custom_llm=
 
     if llm_auth_token == '':
         llm_auth_token = "CUSTOM"
-        
+
     openai.api_key = llm_auth_token
 
-    if using_custom_llm:
-        openai.base_url = llm_base_url
-        openai.api_key = llm_auth_token
-
-
     total_content = ""
-    for chunk in openai.chat.completions.create(
-        model=model,
-        messages=[{
-            "role": "user",
-            "content": prompt
-        }],
-        stream=True,
-        max_tokens=1024,temperature=0.2
-    ):
-        stream_resp = chunk.dict()
-        token = stream_resp["choices"][0]["delta"].get("content", "")
-        if token:
-            
-            total_content += token
-            yield token
+    if using_custom_llm:
+        client = openai.OpenAI(
+                base_url=llm_base_url,
+                api_key=llm_auth_token,
+                )
+        for chunk in client.chat.completions.create(
+            model=model,
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }],
+            stream=True,
+            max_tokens=1024,temperature=0.2
+        ):
+            stream_resp = chunk.dict()
+            token = stream_resp["choices"][0]["delta"].get("content", "")
+            if token:
+                total_content += token
+                yield token
+    else:
+        for chunk in openai.chat.completions.create(
+            model=model,
+            messages=[{
+                "role": "user",
+                "content": prompt
+            }],
+            stream=True,
+            max_tokens=1024,temperature=0.2
+        ):
+            stream_resp = chunk.dict()
+            token = stream_resp["choices"][0]["delta"].get("content", "")
+            if token:
+                total_content += token
+                yield token
     if debug:
         print(total_content)
  

@@ -68,21 +68,13 @@ Reference : [https://github.com/LLM-Red-Team/kimi-free-api](https://github.com/L
 
 ![setting token](./doc/Screenshot-3.png)
 
-## How to using custom LLM like ollama? (Yes we love ollama)
+## How to using bedrock ? (Yes we love bedrock)
 
-1. start ollama serve
+1. First, launch [bedrock-access-gateway](https://github.com/aws-samples/bedrock-access-gateway) and mark your api key and url.
 
-```bash
-export OLLAMA_HOST=0.0.0.0
-ollama serve
-```
 
-2. set ollama url in setting:
-You MUST using your computer's ip address, not localhost/127.0.0.1, because in docker you can't access this address.
-The model name is the model you want to serve by ollama.
-![setting custom llm url](./doc/Screenshot-2.png)
-
-ollama model Reference : [https://ollama.com/library](https://ollama.com/library)
+2. set bedrock url in setting:
+![setting custom llm url](./doc/Screenshot-6.png)
 
 ### How to update to latest
 
@@ -92,7 +84,7 @@ git pull
 docker compose down
 docker compose rm backend
 docker compose rm free_ask_internet_ui
-docker image rm nashsu/free_ask_internet
+docker image rm yuri3928/free_ask_internet
 docker image rm nashsu/free_ask_internet_ui
 docker-compose up -d
 ```

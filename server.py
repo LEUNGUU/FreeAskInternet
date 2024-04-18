@@ -225,7 +225,7 @@ async def stream(search_uuid:str,request: QueryRequest):
             answer_language = ' Traditional Chinese '
         if request.lang == "en-US":
             answer_language = ' English '
-        prompt = ' You are a large language AI assistant develop by nash_su. Answer user question in ' + answer_language + '. And here is the user question: ' + request.query
+        prompt = ' You are a large language AI assistant. Answer user question in ' + answer_language + '. And here is the user question: ' + request.query
         generate = generator(prompt,model=request.model,llm_auth_token=request.llm_auth_token, llm_base_url=request.llm_base_url, using_custom_llm=request.using_custom_llm)
     else:
         prompt = None

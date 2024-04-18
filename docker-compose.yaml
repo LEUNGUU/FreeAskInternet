@@ -1,6 +1,6 @@
 services:
   backend:
-    image: docker.io/nashsu/free_ask_internet:latest
+    image: docker.io/yuri3928/free_ask_internet:latest
     depends_on:
       - llm-freegpt35
     restart: on-failure
